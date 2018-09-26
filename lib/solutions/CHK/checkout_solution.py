@@ -14,15 +14,26 @@ def _is_sku_illegal(skus):
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
-    total_checkout = 0
 
     if _is_sku_illegal(skus):
         return -1
 
+    total_checkout = 0
+    basket = {}
 
+    for item in skus:
+        if item not in basket:
+            basket[item] = 1
+        else:
+            basket[item] += 1
+
+    print(basket)
+
+
+    #total_checkout = sum([for item in ])
 
 
     return total_checkout
 
-skus = "ABCDE"
+skus = "ABBBCD"
 print(checkout(skus))
