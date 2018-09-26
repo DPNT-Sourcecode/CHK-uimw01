@@ -48,11 +48,13 @@ def _get_free_item_offer(basket, item, num_items_offer, free_item):
 
         # If the offer applies to the same item we have to make sure
         # to retrive the right amonght
+        print(item, free_item,num_items_to_retrieve,offers_sold)
         if item == free_item:
+            print(item, free_item)
             num_items_to_retrieve = max(0, num_items_to_retrieve - 1)
             print(num_items_to_retrieve)
 
-        basket[free_item] -= num_items_to_retrieve
+        basket[free_item] = num_items_to_retrieve
     return basket
 
 
@@ -84,5 +86,5 @@ def checkout(skus):
 
     return balance
 
-skus = "BE"
+skus = "ABCDEF"
 print(checkout(skus))
