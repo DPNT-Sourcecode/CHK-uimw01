@@ -73,6 +73,15 @@ def _get_free_item_offer(basket, item, num_items_offer, free_item):
     return basket
 
 
+def _get_group_discount_offer(basket, balance, group_items, num_items_offer, price_offer):
+    if item in basket:
+        offers_sold = basket[item]//num_items_offer
+        num_items_to_retrieve = offers_sold * num_items_offer
+        balance += offers_sold * price_offer
+        basket[item] -= num_items_to_retrieve
+
+    return basket, balance
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
@@ -84,27 +93,31 @@ def checkout(skus):
     basket = _get_basket(skus)
 
     # get OFFER
-    basket = _get_free_item_offer(basket, "E", 2, "B")
-    basket = _get_free_item_offer(basket, "F", 2, "F")
-    basket = _get_free_item_offer(basket, "R", 3, "Q")
-    basket = _get_free_item_offer(basket, "U", 3, "U")
-    basket = _get_free_item_offer(basket, "N", 3, "M")
-    basket, balance = _get_discount_offer(basket, balance, "A", 5, 200)
-    basket, balance = _get_discount_offer(basket, balance, "A", 3, 130)
-    basket, balance = _get_discount_offer(basket, balance, "B", 2, 45)
-    basket, balance = _get_discount_offer(basket, balance, "H", 10, 80)
-    basket, balance = _get_discount_offer(basket, balance, "H", 5, 45)
-    basket, balance = _get_discount_offer(basket, balance, "K", 2, 150)
-    basket, balance = _get_discount_offer(basket, balance, "P", 5, 200)
-    basket, balance = _get_discount_offer(basket, balance, "Q", 3, 80)
-    basket, balance = _get_discount_offer(basket, balance, "V", 3, 130)
-    basket, balance = _get_discount_offer(basket, balance, "V", 2, 90)
+    # basket = _get_free_item_offer(basket, "E", 2, "B")
+    # basket = _get_free_item_offer(basket, "F", 2, "F")
+    # basket = _get_free_item_offer(basket, "R", 3, "Q")
+    # basket = _get_free_item_offer(basket, "U", 3, "U")
+    # basket = _get_free_item_offer(basket, "N", 3, "M")
+    # basket, balance = _get_discount_offer(basket, balance, "A", 5, 200)
+    # basket, balance = _get_discount_offer(basket, balance, "A", 3, 130)
+    # basket, balance = _get_discount_offer(basket, balance, "B", 2, 45)
+    # basket, balance = _get_discount_offer(basket, balance, "H", 10, 80)
+    # basket, balance = _get_discount_offer(basket, balance, "H", 5, 45)
+    # basket, balance = _get_discount_offer(basket, balance, "K", 2, 150)
+    # basket, balance = _get_discount_offer(basket, balance, "P", 5, 200)
+    # basket, balance = _get_discount_offer(basket, balance, "Q", 3, 80)
+    # basket, balance = _get_discount_offer(basket, balance, "V", 3, 130)
+    # basket, balance = _get_discount_offer(basket, balance, "V", 2, 90)
 
+    group_items = ['S', 'T', 'X', 'Y', 'Z']
+
+    group_items_sold = sum([basket[item] for item in group_items])
+    print(group_items_sold)
 
     # Sum the regular items
     balance += sum([PRICE[item]*quantity for item,quantity in basket.items()])
 
     return balance
 
-skus = "VVVVV"
+skus = "SSS"
 print(checkout(skus))
