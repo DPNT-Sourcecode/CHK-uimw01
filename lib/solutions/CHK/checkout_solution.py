@@ -37,7 +37,7 @@ def _get_discount_offer(basket, balance, item, num_items_offer, price_offer):
 def _get_free_item_offer(basket, item, num_items_offer, free_item):
     if item in basket and free_item in basket:
         offers_sold = basket[item]//num_items_offer
-        basket[free_item] -= offers_sold
+        basket[free_item] -= max(0, offers_sold)
     return basket
 
 
@@ -52,14 +52,17 @@ def checkout(skus):
     basket = _get_basket(skus)
 
     # get OFFER
+    basket = _get_free_item_offer(basket, "E", 2, "B")
     basket, balance = _get_discount_offer(basket, balance, "A", 5, 200)
     basket, balance = _get_discount_offer(basket, balance, "A", 3, 130)
     basket, balance = _get_discount_offer(basket, balance, "B", 2, 45)
-    basket = _get_free_item_offer(basket, "E", 2, "B")
+
+
+    print(basket)
 
     balance += sum([PRICE[item]*quantity for item,quantity in basket.items()])
 
     return balance
 
-#skus = "EEBB"
-#print(checkout(skus))
+skus = "BEBEEE"
+print(checkout(skus))
