@@ -1,7 +1,10 @@
-PRICE = {"A":50,
-        "B":30,
-        "C":20,
-        "D":15}
+PRICE = {"A": 50,
+         "B": 30,
+         "C": 20,
+         "D": 15}
+
+OFFERS = [("A", 3, 130),
+          ("B", 2, 45)]
 
 
 def _is_sku_illegal(skus):
@@ -10,6 +13,7 @@ def _is_sku_illegal(skus):
             return True
     return False
 
+
 def _get_basket(skus):
     basket = {}
     for item in skus:
@@ -17,6 +21,11 @@ def _get_basket(skus):
             basket[item] = 0
         basket[item] += 1
     return basket
+
+def _get_offer():
+
+    return None
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
@@ -26,6 +35,9 @@ def checkout(skus):
 
     total_checkout = 0
     basket = _get_basket(skus)
+
+    # get OFFERS
+    offers_sold =0
 
 
     total_checkout = sum([PRICE[item]*quantity for item,quantity in basket.items()])
@@ -40,4 +52,6 @@ def checkout(skus):
     return total_checkout
 
 skus = "ABBBCD"
-print(checkout(skus))
+#print(checkout(skus))
+
+print(10/3)
