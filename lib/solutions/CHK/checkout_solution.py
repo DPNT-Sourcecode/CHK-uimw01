@@ -111,7 +111,7 @@ def checkout(skus):
 
     group_items = ['S', 'T', 'X', 'Y', 'Z']
 
-    group_items_sold = sum([basket[item] for item in group_items])
+    group_items_sold = sum([basket[item] for item in group_items if item in basket])
     print(group_items_sold)
 
     # Sum the regular items
@@ -119,5 +119,5 @@ def checkout(skus):
 
     return balance
 
-skus = "SSS"
+skus = "STXY"
 print(checkout(skus))
