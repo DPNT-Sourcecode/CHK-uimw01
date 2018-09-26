@@ -99,6 +99,7 @@ def checkout(skus):
     basket = _get_basket(skus)
 
     # get OFFER
+    basket, balance  = _get_group_discount_offer(basket, balance, ['S', 'T', 'X', 'Y', 'Z'], 3, 45)
     # basket = _get_free_item_offer(basket, "E", 2, "B")
     # basket = _get_free_item_offer(basket, "F", 2, "F")
     # basket = _get_free_item_offer(basket, "R", 3, "Q")
@@ -128,5 +129,5 @@ def checkout(skus):
 
     return balance
 
-skus = "STXY"
+skus = "ZXZ"
 print(checkout(skus))
