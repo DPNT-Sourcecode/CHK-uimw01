@@ -99,7 +99,7 @@ def checkout(skus):
     balance = 0
     basket = _get_basket(skus)
 
-    # get OFFER
+    # Apply OFFERs
     basket, balance  = _get_group_discount_offer(basket, balance, ['S', 'T', 'X', 'Y', 'Z'], 3, 45)
     basket = _get_free_item_offer(basket, "E", 2, "B")
     basket = _get_free_item_offer(basket, "F", 2, "F")
@@ -117,24 +117,25 @@ def checkout(skus):
     basket, balance = _get_discount_offer(basket, balance, "V", 3, 130)
     basket, balance = _get_discount_offer(basket, balance, "V", 2, 90)
 
-    group_items = ['S', 'T', 'X', 'Y', 'Z']
-    num_items_offer = 3
-
-    group_items_sold = sum([basket[item] for item in group_items if item in basket])//num_items_offer
-
 
     # Sum the regular items
     balance += sum([PRICE[item]*quantity for item,quantity in basket.items()])
 
     return balance
 
-skus = "AAAAAA"
-print(checkout("AAA"))
-## I should have done that way before :)
-assert(checkout("AAA") == 130)
-assert(checkout("RRRQQ") == 180)
-assert(checkout("AAAAA") == 200)
-assert(checkout("AAAAA") == 200)
-assert(checkout("AAAAA") == 200)
-assert(checkout("AAAAA") == 200)
-assert(checkout("AAAAA") == 200)
+def _test():
+    """
+    I should have done that way before :)
+
+    """
+    assert(checkout("AAA") == 130)
+    assert(checkout("RRRQQ") == 180)
+    assert(checkout("XXX") == 45)
+    assert(checkout("SSSZ") == 65)
+    assert(checkout("ZZZS") == 65)
+    assert(checkout("ZZZZ") == 66)
+    assert(checkout("FFF") == 20)
+    assert(checkout("FF") == 20)
+    assert(checkout("AAAAAA") == 250)
+    assert(checkout("AAAAAAAA") == 330)
+_test()
