@@ -28,6 +28,9 @@ PRICE = {"A": 50,
 
 
 def _is_sku_illegal(skus):
+    """
+    Check if the sku is illegal...
+    """
     for item in skus:
         if item not in PRICE:
             return True
@@ -35,6 +38,9 @@ def _is_sku_illegal(skus):
 
 
 def _get_basket(skus):
+    """
+    Count the elements of the skus
+    """
     basket = {}
     for item in skus:
         if item not in basket:
@@ -71,6 +77,9 @@ def _get_free_item_offer(basket, item, num_items_offer, free_item):
 
 
 def _get_group_discount_offer(basket, balance, group_items, num_items_offer, price_offer):
+    """
+    Update the balance and the basket for a Group discount offer
+    """
     group_items = [item for item in group_items if item in basket]
     offers_sold = sum([basket[item] for item in group_items])//num_items_offer
     sorted_group_item = [item for item in sorted(PRICE, key=PRICE.get,reverse=True) if item in group_items]
@@ -100,14 +109,15 @@ def checkout(skus):
     basket = _get_basket(skus)
 
     # Apply OFFERs
+
     basket, balance  = _get_group_discount_offer(basket, balance, ['S', 'T', 'X', 'Y', 'Z'], 3, 45)
     basket = _get_free_item_offer(basket, "E", 2, "B")
     basket = _get_free_item_offer(basket, "F", 2, "F")
     basket = _get_free_item_offer(basket, "R", 3, "Q")
     basket = _get_free_item_offer(basket, "U", 3, "U")
     basket = _get_free_item_offer(basket, "N", 3, "M")
-    basket, balance = _get_discount_offer(basket, balance, "A", 5, 200)
-    basket, balance = _get_discount_offer(basket, balance, "A", 3, 130)
+    basket, balance = _get_group_discount_offer(basket, balance, "A", 5, 200)
+    basket, balance = _get_group_discount_offer(basket, balance, "A", 3, 130)
     basket, balance = _get_discount_offer(basket, balance, "B", 2, 45)
     basket, balance = _get_discount_offer(basket, balance, "H", 10, 80)
     basket, balance = _get_discount_offer(basket, balance, "H", 5, 45)
@@ -128,7 +138,9 @@ def _test():
     I should have done that way before :)
 
     """
-    assert(checkout("AAA") == 130)
+    print("Tests are running")
+
+    assert(checkout("AAA") == 1300)
     assert(checkout("RRRQQ") == 180)
     assert(checkout("XXX") == 45)
     assert(checkout("SSSZ") == 65)
@@ -138,4 +150,6 @@ def _test():
     assert(checkout("FF") == 20)
     assert(checkout("AAAAAA") == 250)
     assert(checkout("AAAAAAAA") == 330)
+
+
 _test()
