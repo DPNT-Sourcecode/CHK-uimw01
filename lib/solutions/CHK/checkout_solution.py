@@ -32,7 +32,7 @@ def _get_special_offer(basket, balance, item, num_items_offer, price_offer):
         offers_sold = basket[item]//num_items_offer
         num_items_to_retrieve = offers_sold * num_items_offer
         balance += offers_sold * price_offer
-        basket[item] += num_items_to_retrieve
+        basket[item] -= num_items_to_retrieve
 
     return basket, balance
 
@@ -53,14 +53,7 @@ def checkout(skus):
 
     balance += sum([PRICE[item]*quantity for item,quantity in basket.items()])
 
-
-    print(basket)
-
-
-    #total_checkout = sum([for item in ])
-
-
     return balance
 
-skus = "D"
-print(checkout(skus))
+#skus = "AAAAAAA"
+#print(checkout(skus))
