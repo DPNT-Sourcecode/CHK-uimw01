@@ -61,5 +61,5 @@ def checkout(skus):
 
     return balance
 
-skus = "EEB"
-print(checkout(skus))
+#skus = "EEBB"
+#print(checkout(skus))
