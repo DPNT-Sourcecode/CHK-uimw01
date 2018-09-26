@@ -86,5 +86,5 @@ def checkout(skus):
 
     return balance
 
-skus = "ABCDEF"
+skus = "BE"
 print(checkout(skus))
