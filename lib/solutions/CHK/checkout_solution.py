@@ -71,7 +71,8 @@ def _get_free_item_offer(basket, item, num_items_offer, free_item):
 
 
 def _get_group_discount_offer(basket, balance, group_items, num_items_offer, price_offer):
-    offers_sold = sum([basket[item] for item in group_items if item in basket])//num_items_offer
+    group_items = [item for item in group_items if item in basket]
+    offers_sold = sum([basket[item] for item in group_items])//num_items_offer
     sorted_group_item = [item for item in sorted(PRICE, key=PRICE.get,reverse=True) if item in group_items]
 
     balance += offers_sold * price_offer
@@ -122,12 +123,10 @@ def checkout(skus):
     group_items_sold = sum([basket[item] for item in group_items if item in basket])//num_items_offer
 
 
-    print(group_items_sold)
-
     # Sum the regular items
     balance += sum([PRICE[item]*quantity for item,quantity in basket.items()])
 
     return balance
 
-skus = "ZXZ"
+skus = "AAAAAA"
 print(checkout(skus))
