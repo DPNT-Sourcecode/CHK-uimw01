@@ -50,6 +50,7 @@ def _get_free_item_offer(basket, item, num_items_offer, free_item):
         # to retrive the right amonght
         if item == free_item:
             num_items_to_retrieve = max(0, num_items_to_retrieve - 1)
+            print(num_items_to_retrieve)
 
         basket[free_item] -= num_items_to_retrieve
     return basket
@@ -67,17 +68,21 @@ def checkout(skus):
 
     # get OFFER
     basket = _get_free_item_offer(basket, "E", 2, "B")
+    print(basket,balance)
     basket = _get_free_item_offer(basket, "F", 2, "F")
-    print(basket)
+    print(basket,balance)
 
     basket, balance = _get_discount_offer(basket, balance, "A", 5, 200)
+    print(basket,balance)
     basket, balance = _get_discount_offer(basket, balance, "A", 3, 130)
+    print(basket,balance)
     basket, balance = _get_discount_offer(basket, balance, "B", 2, 45)
+    print(basket,balance)
 
     # Sum the regular items
     balance += sum([PRICE[item]*quantity for item,quantity in basket.items()])
 
     return balance
 
-#skus = "FFFFF"
-#print(checkout(skus))
+skus = "BE"
+print(checkout(skus))
