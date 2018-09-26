@@ -122,7 +122,7 @@ def checkout(skus):
     basket, balance = _get_discount_offer(basket, balance, "B", 2, 45)
     basket, balance = _get_discount_offer(basket, balance, "H", 10, 80)
     basket, balance = _get_discount_offer(basket, balance, "H", 5, 45)
-    basket, balance = _get_discount_offer(basket, balance, "K", 2, 150)
+    basket, balance = _get_discount_offer(basket, balance, "K", 2, 120)
     basket, balance = _get_discount_offer(basket, balance, "P", 5, 200)
     basket, balance = _get_discount_offer(basket, balance, "Q", 3, 80)
     basket, balance = _get_discount_offer(basket, balance, "V", 3, 130)
@@ -160,6 +160,8 @@ def _test():
     assert(checkout("FF") == 20)
     assert(checkout("AAAAAA") == 250)
     assert(checkout("AAAAAAAA") == 330)
+    assert(checkout("KK") == 120)
+    assert(checkout("KKK") == 190)
+    assert(checkout("KKKK") == 240)
 
-
-# _test()
+_test()
