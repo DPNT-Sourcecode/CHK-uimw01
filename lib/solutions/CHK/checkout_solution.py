@@ -26,9 +26,6 @@ PRICE = {"A": 50,
          "Z": 21
          }
 
-OFFERS = [("A", 3, 130),
-          ("B", 2, 45)]
-
 
 def _is_sku_illegal(skus):
     for item in skus:
@@ -52,9 +49,9 @@ def _get_discount_offer(basket, balance, item, num_items_offer, price_offer):
     """
     if item in basket:
         offers_sold = basket[item]//num_items_offer
-        num_items_to_retrieve = offers_sold * num_items_offer
+        num_items_to_remove = offers_sold * num_items_offer
         balance += offers_sold * price_offer
-        basket[item] -= num_items_to_retrieve
+        basket[item] -= num_items_to_remove
 
     return basket, balance
 
@@ -75,13 +72,19 @@ def _get_free_item_offer(basket, item, num_items_offer, free_item):
 
 def _get_group_discount_offer(basket, balance, group_items, num_items_offer, price_offer):
     offers_sold = sum([basket[item] for item in group_items if item in basket])//num_items_offer
-    balance += offers_sold * price_offer
-    return
-    sorted_group_item = None
-    for item in group_items:
+    sorted_group_item = [item for item in sorted(PRICE, key=PRICE.get,reverse=True) if item in group_items]
 
-        num_items_to_retrieve = offers_sold * num_items_offer
-    basket[item] -= num_items_to_retrieve
+    balance += offers_sold * price_offer
+    number_of_items_to_remove = offers_sold * num_items_offer
+
+    for item in sorted_group_item:
+        number_of_items = basket[item]
+        if number_of_items < number_of_items_to_remove:
+            basket[item] = 0
+            number_of_items_to_remove -= number_of_items
+        else:
+            basket[item] -= number_of_items_to_remove
+            break
 
     return basket, balance
 
@@ -126,6 +129,4 @@ def checkout(skus):
     return balance
 
 skus = "STXY"
-#print(checkout(skus))
-
-print(sorted(PRICE, key=PRICE.get,reverse=True))
+print(checkout(skus))
