@@ -10,7 +10,13 @@ def _is_sku_illegal(skus):
             return True
     return False
 
-
+def _get_basket(skus):
+    basket = {}
+    for item in skus:
+        if item not in basket:
+            basket[item] = 0
+        basket[item] += 1
+    return basket
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
@@ -19,13 +25,11 @@ def checkout(skus):
         return -1
 
     total_checkout = 0
-    basket = {}
+    basket = _get_basket(skus)
 
-    for item in skus:
-        if item not in basket:
-            basket[item] = 1
-        else:
-            basket[item] += 1
+
+    total_checkout = sum([PRICE[item]*quantity for item,quantity in basket.items()])
+
 
     print(basket)
 
