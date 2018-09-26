@@ -1,7 +1,8 @@
 PRICE = {"A": 50,
          "B": 30,
          "C": 20,
-         "D": 15}
+         "D": 15,
+         "E": 40}
 
 OFFERS = [("A", 3, 130),
           ("B", 2, 45)]
@@ -22,12 +23,8 @@ def _get_basket(skus):
         basket[item] += 1
     return basket
 
-def _get_offer():
 
-    return None
-
-
-def _get_special_offer(basket, balance, item, num_items_offer, price_offer):
+def _get_discount_offer(basket, balance, item, num_items_offer, price_offer):
     if item in basket:
         offers_sold = basket[item]//num_items_offer
         num_items_to_retrieve = offers_sold * num_items_offer
@@ -35,6 +32,14 @@ def _get_special_offer(basket, balance, item, num_items_offer, price_offer):
         basket[item] -= num_items_to_retrieve
 
     return basket, balance
+
+
+def _get_free_item_offer(basket, item, num_items_offer, free_item):
+    if item in basket and free_item in basket:
+        offers_sold = basket[item]//num_items_offer
+        basket[free_item] -= offers_sold
+    return basket
+
 
 # noinspection PyUnusedLocal
 # skus = unicode string
@@ -47,13 +52,14 @@ def checkout(skus):
     basket = _get_basket(skus)
 
     # get OFFER
-
-    basket, balance = _get_special_offer(basket, balance, "A", 3, 130)
-    basket, balance = _get_special_offer(basket, balance, "B", 2, 45)
+    basket, balance = _get_discount_offer(basket, balance, "A", 5, 200)
+    basket, balance = _get_discount_offer(basket, balance, "A", 3, 130)
+    basket, balance = _get_discount_offer(basket, balance, "B", 2, 45)
+    basket = _get_free_item_offer(basket, "E", 2, "B")
 
     balance += sum([PRICE[item]*quantity for item,quantity in basket.items()])
 
     return balance
 
-#skus = "AAAAAAA"
-#print(checkout(skus))
+skus = "EEB"
+print(checkout(skus))
